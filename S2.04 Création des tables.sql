@@ -14,7 +14,7 @@ CREATE TABLE Date (
 
 CREATE TABLE Quartiers (
     idQuartier INT,
-    nomQuartiers VARCHAR(50) NOT NULL,
+    nomQuartier VARCHAR(50) NOT NULL,
     amenagementCyclable FLOAT NOT NULL,
     CONSTRAINT pk_Quartiers PRIMARY KEY (idQuartier)
 );

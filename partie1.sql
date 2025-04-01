@@ -1,5 +1,5 @@
 -- Liste des Quartiers qui possèdent un compteur
-SELECT DISTINCT UPPER(nom)
+SELECT DISTINCT UPPER(nomQuartiers)
 FROM Quartiers
 INNER JOIN Compteur ON idQuartier = identifiant;
 
