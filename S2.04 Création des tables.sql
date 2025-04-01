@@ -24,7 +24,7 @@ CREATE TABLE Compteurs (
     idQuartier INT,
     localisation VARCHAR(100) NOT NULL,
     CONSTRAINT pk_Compteur PRIMARY KEY (idCompteur),
-    CONSTRAINT fk_Quartiers FOREIGN KEY (idQuartier) REFERENCES Quartiers(identifiant)
+    CONSTRAINT fk_Quartiers FOREIGN KEY (idQuartier) REFERENCES Quartiers(idQuartier)
 );
 
 CREATE TABLE Comptage_Velo (
@@ -33,6 +33,6 @@ CREATE TABLE Comptage_Velo (
     nombresVelos INT NOT NULL,
     probabilitePresenceAnomalie VARCHAR(50),
     CONSTRAINT pk_comptageVelo PRIMARY KEY (numCompteur, date),
-    CONSTRAINT fk_numCompteur FOREIGN KEY (numCompteur) REFERENCES Compteur(idCompteur),
+    CONSTRAINT fk_numCompteur FOREIGN KEY (numCompteur) REFERENCES Compteurs(idCompteur),
     CONSTRAINT fk_date FOREIGN KEY (date) REFERENCES Date(date)
 );
