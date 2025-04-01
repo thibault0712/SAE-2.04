@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS Comptage_Velo;
-DROP TABLE IF EXISTS Compteur;
+DROP TABLE IF EXISTS Compteurs;
 DROP TABLE IF EXISTS Quartiers;
 DROP TABLE IF EXISTS Date;
 
@@ -21,14 +21,14 @@ CREATE TABLE Quartiers (
 
 CREATE TABLE Compteurs (
     idCompteur INT,
-    idQuartier INT,
+    unQuartier INT,
     localisation VARCHAR(100) NOT NULL,
     CONSTRAINT pk_Compteur PRIMARY KEY (idCompteur),
-    CONSTRAINT fk_Quartiers FOREIGN KEY (idQuartier) REFERENCES Quartiers(idQuartier)
+    CONSTRAINT fk_Quartiers FOREIGN KEY (unQuartier) REFERENCES Quartiers(idQuartier)
 );
 
 CREATE TABLE Comptage_Velo (
-    numCompteur INT,
+    unCompteur INT,
     date DATE,
     nombresVelos INT NOT NULL,
     probabilitePresenceAnomalie VARCHAR(50),

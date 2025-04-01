@@ -3,9 +3,9 @@
 ## Modèle UML
 
 ```plaintext
-Comptage_Velo(numCompteur=@Compeurs.idCompteur INT (1), une_date=@Date.date DATE (1), nombre_velos INT (NN), Probalite_presence_anomalie VARCHAR)
+Comptage_Velo(unCompteur=@Compeurs.idCompteur INT (1), une_date=@Date.date DATE (1), nombre_velos INT (NN), Probalite_presence_anomalie VARCHAR)
 
-Compteurs (idCompteur INT (1), idQuartier=@Quartiers.identifiant INT, localisation VARCHAR (NN))
+Compteurs (idCompteur INT (1), unQuartier=@Quartiers.identifiant INT, localisation VARCHAR (NN))
 
 Quartiers (idQuartier INT (1), nomQuartier VARCHAR (NN), amenagementCyclable FLOAT (NN))
 
