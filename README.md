@@ -15,3 +15,5 @@ Date (date DATE (1), jour INT, températureMoyenne FLOAT (NN), vacances VARCHAR 
 ## Contraintes TXT :
 - Le jour_de_la_semaine est entre 1 et 7 INCLUS
 - amenagement_cyclable > 0
+- La probabilité d'une anomalie est soit Fort | Moyen | Faible ou Rien
+- Les vacances sont soit 1 -> Vrai ou 0 -> Faux
