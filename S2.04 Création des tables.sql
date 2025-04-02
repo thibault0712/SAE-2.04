@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS Date;
 CREATE TABLE Date (
     date DATE,
     jour INT,
-    températureMoyenne FLOAT,
+    temperatureMoyenne FLOAT,
     vacances VARCHAR(100),
     CONSTRAINT pk_Date PRIMARY KEY (date)
 );
