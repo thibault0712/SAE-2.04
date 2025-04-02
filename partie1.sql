@@ -12,3 +12,17 @@ JOIN Comptage_Velo C2 ON C1.nombresVelos = C2.nombresVelos;
 
 -- 4) 
 
+-- 5) 
+
+-- 6) 
+
+-- 7) 
+
+-- 8) 
+
+-- 9) 
+
+-- 10) 
+
+-- 11) 
+
