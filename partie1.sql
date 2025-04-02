@@ -8,21 +8,31 @@ SELECT C1.date Date1, C2.date Date2, C1.nombresVelos
 FROM Comptage_Velo C1
 JOIN Comptage_Velo C2 ON C1.nombresVelos = C2.nombresVelos;
 
--- 3) 
+-- 3) jointure externe
+SELECT DISTINCT C1.date Date1, C2.date Date2, C1.nombresVelos
+FROM Comptage_Velo C1
+LEFT JOIN Comptage_Velo C2 ON C1.nombresVelos = C2.nombresVelos AND C1.date <> C2.date;
 
--- 4) 
+-- 4) jointure externe
+
 
 -- 5) 
 
+
 -- 6) 
+
 
 -- 7) 
 
+
 -- 8) 
+
 
 -- 9) 
 
+
 -- 10) 
+
 
 -- 11) 
 
