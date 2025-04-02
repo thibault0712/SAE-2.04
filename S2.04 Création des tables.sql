@@ -7,9 +7,8 @@ CREATE TABLE Date (
     date DATE,
     jour INT,
     températureMoyenne FLOAT,
-    vacances INT,
+    vacances VARCHAR(100),
     CONSTRAINT pk_Date PRIMARY KEY (date),
-    CONSTRAINT ck_Vacances CHECK (vacances IN (0, 1))
 );
 
 CREATE TABLE Quartiers (
