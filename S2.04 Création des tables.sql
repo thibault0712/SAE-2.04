@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS Date;
 CREATE TABLE Date (
     date DATE,
     jour INT,
-    temperatureMoyenne FLOAT,
+    températureMoyenne FLOAT,
     vacances VARCHAR(100),
     CONSTRAINT pk_Date PRIMARY KEY (date)
 );
@@ -31,7 +31,7 @@ CREATE TABLE Comptage_Velo (
     date DATE,
     nombresVelos INT NOT NULL,
     probabilitePresenceAnomalie VARCHAR(50),
-    CONSTRAINT pk_comptageVelo PRIMARY KEY (numCompteur, date),
-    CONSTRAINT fk_numCompteur FOREIGN KEY (numCompteur) REFERENCES Compteurs(idCompteur),
+    CONSTRAINT pk_comptageVelo PRIMARY KEY (unCompteur, date),
+    CONSTRAINT fk_numCompteur FOREIGN KEY (unCompteur) REFERENCES Compteurs(idCompteur),
     CONSTRAINT fk_date FOREIGN KEY (date) REFERENCES Date(date)
 );
