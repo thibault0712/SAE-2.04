@@ -75,6 +75,9 @@ with open("s204_temperature.csv", newline="", encoding="utf-8") as fichier:
 
         cpt = cpt+1
 
+
+sql_statements.append("-- Insertion dans la table Date")
+
 for i in range(0, len(comptageVeloCSV)):
     leTrucAAdd = ["", None, 0, ""]
     leTrucAAdd[0] = convert_date(comptageVeloCSV[i][1])
@@ -170,6 +173,8 @@ for i in range (0, len(comptageVeloCSV)):
         print(sql_statements[-1])
     else:
         print("Erreur avec les donnée, Date ou compteur manquant pour le comptage " + str(leTrucAAdd[0]) + " " + str(leTrucAAdd[1]))
+
+sql_statements = list(dict.fromkeys(sql_statements))
 
 # Sauvegarde dans un fichier SQL
 with open("insert_data.sql", "w", encoding="utf-8") as f:
