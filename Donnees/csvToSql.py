@@ -14,6 +14,11 @@ quartierLongueurPisteCSV = []
 dateTempCSV = []
 comptageVeloCSV = []
 
+sql_statements.append("DELETE FROM Comptage_Velo;")
+sql_statements.append("DELETE FROM Compteurs;")
+sql_statements.append("DELETE FROM Quartiers;")
+sql_statements.append("DELETE FROM Date;")
+
 with open("s204_compteurs.csv", newline="", encoding="utf-8") as fichier:
     cpt = 0
     for ligne in fichier:
@@ -95,7 +100,7 @@ for i in range(0, len(comptageVeloCSV)):
         j = j+1
 
     sql_statements.append(
-        f"INSERT INTO Date (date, jour, temperatureMoyenne, vacances) VALUES ('{leTrucAAdd[0]}', {leTrucAAdd[2]}, {leTrucAAdd[1]}, '{leTrucAAdd[3]}');"
+        f"INSERT INTO Date (date, jour, temperatureMoyenne, vacances) VALUES ('{leTrucAAdd[0]}', {leTrucAAdd[2]}, {leTrucAAdd[1]}, \"{leTrucAAdd[3]}\");"
     )
     print(sql_statements[-1])
 
