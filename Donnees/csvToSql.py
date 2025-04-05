@@ -139,10 +139,10 @@ for i in range(0, len(compteurCSV)):
     quartierTrouvee = False
     j = 0
     while j<len(quartierCompteurCSV) and not quartierTrouvee:
-        if quartierCompteurCSV[j][0] == compteurCSV[j][0]:
-            leTrucAAdd[1] = int(quartierCompteurCSV[j][1])
+        if quartierCompteurCSV[j][0] == compteurCSV[i][0] and quartierCompteurCSV[j][1].strip() != "":
+            leTrucAAdd[1] = int(quartierCompteurCSV[j][1].strip())
             quartierTrouvee = True
-        j = j+1
+        j = j + 1
 
     sql_statements.append(
         f"INSERT INTO Compteurs (idCompteur, unQuartier, localisation) VALUES ({leTrucAAdd[0]}, {leTrucAAdd[1]}, '{leTrucAAdd[2]}');"
@@ -158,6 +158,9 @@ for i in range (0, len(comptageVeloCSV)):
     leTrucAAdd[2] = int(comptageVeloCSV[i][2])
     leTrucAAdd[3] = comptageVeloCSV[i][3]
 
+    if comptageVeloCSV[i][3] == "":
+        leTrucAAdd[3] = 'NULL'
+
     OKCompteur = False
     j = 0
     while j<len(compteurCSV) and not OKCompteur:
@@ -172,9 +175,16 @@ for i in range (0, len(comptageVeloCSV)):
         j = j+1
     print("OKDate " + str(OKDate) + " OKCompteur " + str(OKCompteur))
     if(OKDate and OKCompteur):
-        sql_statements.append(
-            f"INSERT INTO Comptage_Velo (unCompteur, date, nombresVelos, probabilitePresenceAnomalie) VALUES ({leTrucAAdd[0]}, '{leTrucAAdd[1]}', {leTrucAAdd[2]}, '{leTrucAAdd[3]}');"
-        )
+        if comptageVeloCSV[i][3] == "":
+            #Quand 3ème colonne = NULL on ne met pas de ""
+            sql_statements.append(
+                f"INSERT INTO Comptage_Velo (unCompteur, date, nombresVelos, probabilitePresenceAnomalie) VALUES ({leTrucAAdd[0]}, '{leTrucAAdd[1]}', {leTrucAAdd[2]}, {leTrucAAdd[3]});"
+            )
+        else:
+            #Quand 3ème colonne != NULL on met ""
+            sql_statements.append(
+                f"INSERT INTO Comptage_Velo (unCompteur, date, nombresVelos, probabilitePresenceAnomalie) VALUES ({leTrucAAdd[0]}, '{leTrucAAdd[1]}', {leTrucAAdd[2]}, '{leTrucAAdd[3]}');"
+            )
         print(sql_statements[-1])
     else:
         print("Erreur avec les donnée, Date ou compteur manquant pour le comptage " + str(leTrucAAdd[0]) + " " + str(leTrucAAdd[1]))

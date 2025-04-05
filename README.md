@@ -16,3 +16,7 @@ Date (date DATE (1), jour INT, temperatureMoyenne FLOAT (NN), vacances VARCHAR (
 - Le jour_de_la_semaine est entre 1 et 7 INCLUS
 - amenagement_cyclable > 0
 - La probabilité d'une anomalie est soit Fort | Moyen | Faible ou Rien
+
+## TODO
+- Verif si OK suppression plusieurs data quand quartierCompteurCSV[j][1] != "":
+- Régler les prb de None 
