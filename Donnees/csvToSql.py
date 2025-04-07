@@ -178,12 +178,12 @@ for i in range (0, len(comptageVeloCSV)):
         if comptageVeloCSV[i][3] == "":
             #Quand 3ème colonne = NULL on ne met pas de ""
             sql_statements.append(
-                f"INSERT INTO Comptage_Velo (unCompteur, date, nombresVelos, probabilitePresenceAnomalie) VALUES ({leTrucAAdd[0]}, '{leTrucAAdd[1]}', {leTrucAAdd[2]}, {leTrucAAdd[3]});"
+                f"INSERT INTO Comptage_Velo (unCompteur, uneDate, nombresVelos, probabilitePresenceAnomalie) VALUES ({leTrucAAdd[0]}, '{leTrucAAdd[1]}', {leTrucAAdd[2]}, {leTrucAAdd[3]});"
             )
         else:
             #Quand 3ème colonne != NULL on met ""
             sql_statements.append(
-                f"INSERT INTO Comptage_Velo (unCompteur, date, nombresVelos, probabilitePresenceAnomalie) VALUES ({leTrucAAdd[0]}, '{leTrucAAdd[1]}', {leTrucAAdd[2]}, '{leTrucAAdd[3]}');"
+                f"INSERT INTO Comptage_Velo (unCompteur, uneDate, nombresVelos, probabilitePresenceAnomalie) VALUES ({leTrucAAdd[0]}, '{leTrucAAdd[1]}', {leTrucAAdd[2]}, '{leTrucAAdd[3]}');"
             )
         print(sql_statements[-1])
     else:

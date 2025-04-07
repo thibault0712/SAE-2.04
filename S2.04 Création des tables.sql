@@ -28,10 +28,10 @@ CREATE TABLE Compteurs (
 
 CREATE TABLE Comptage_Velo (
     unCompteur INT,
-    date DATE,
+    uneDate DATE,
     nombresVelos INT NOT NULL,
     probabilitePresenceAnomalie VARCHAR(50),
-    CONSTRAINT pk_comptageVelo PRIMARY KEY (unCompteur, date),
+    CONSTRAINT pk_comptageVelo PRIMARY KEY (unCompteur, uneDate),
     CONSTRAINT fk_numCompteur FOREIGN KEY (unCompteur) REFERENCES Compteurs(idCompteur),
-    CONSTRAINT fk_date FOREIGN KEY (date) REFERENCES Date(date)
+    CONSTRAINT fk_date FOREIGN KEY (uneDate) REFERENCES Date(date)
 );
