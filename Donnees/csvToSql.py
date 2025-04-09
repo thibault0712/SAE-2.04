@@ -1,12 +1,11 @@
+# TODO add information when one line is finished
+# TODO Doc
+# TODO rename dateTemp
+
 from datetime import datetime
 import csv
 
-def convert_date(date_str):
-    """Convertit une date au format JJ/MM/AAAA en AAAA-MM-JJ"""
-    return datetime.strptime(date_str, "%d/%m/%Y").strftime("%Y-%m-%d")
-
-sql_statements = []
-
+sqlFileGenerationContent = []
 compteurCSV = []
 quartierCSV = []
 quartierCompteurCSV = []
@@ -14,142 +13,140 @@ quartierLongueurPisteCSV = []
 dateTempCSV = []
 comptageVeloCSV = []
 
-sql_statements.append("DELETE FROM Comptage_Velo;")
-sql_statements.append("DELETE FROM Compteurs;")
-sql_statements.append("DELETE FROM Quartiers;")
-sql_statements.append("DELETE FROM Date;")
+def convert_date(date_str):
+    """Convertit une date au format JJ/MM/AAAA en AAAA-MM-JJ"""
+    return datetime.strptime(date_str, "%d/%m/%Y").strftime("%Y-%m-%d")
 
+
+sqlFileGenerationContent.append("DELETE FROM Comptage_Velo;")
+sqlFileGenerationContent.append("DELETE FROM Compteurs;")
+sqlFileGenerationContent.append("DELETE FROM Quartiers;")
+sqlFileGenerationContent.append("DELETE FROM Date;")
+
+# Read the data
 with open("s204_compteurs.csv", newline="", encoding="utf-8") as fichier:
-    cpt = 0
+    next(fichier)  # Ignore la première ligne du fichier (permet d'éviter l'entête)
     for ligne in fichier:
-        print(ligne)
-        if cpt != 0:
-            print("test")
-            compteur = ligne.split(";")
-            compteurCSV.append(compteur)
-            
-        cpt = cpt+1
+        compteur = ligne.split(";")
+        compteurCSV.append(compteur)
+
 
 with open("s204_quartiers.csv", newline="", encoding="utf-8") as fichier:
-    cpt = 0
+    next(fichier)  # Ignore la première ligne du fichier (permet d'éviter l'entête)
     for ligne in fichier:
-        print(ligne)
-        if cpt != 0:
-            quartier = ligne.split(";")
-            quartierCSV.append(quartier)
-            
-        cpt = cpt+1
+        quartier = ligne.split(";")
+        quartierCSV.append(quartier)
+
 
 with open("s204_quartier_compteur.csv", newline="", encoding="utf-8") as fichier:
-    cpt = 0
+    next(fichier)  # Ignore la première ligne du fichier (permet d'éviter l'entête)
     for ligne in fichier:
-        print(ligne)
-        if cpt != 0:
-            quartier_compteur = ligne.split(";")
-            quartierCompteurCSV.append(quartier_compteur)
-            
-        cpt = cpt+1
+        quartier_compteur = ligne.split(";")
+        quartierCompteurCSV.append(quartier_compteur)
+
 
 with open("s204_longueur_pistes_velo.csv", newline="", encoding="utf-8") as fichier:
-    cpt = 0
+    next(fichier)  # Ignore la première ligne du fichier (permet d'éviter l'entête)
     for ligne in fichier:
-        print(ligne)
-        if cpt != 0:
-            longueur_piste_velo = ligne.split(";")
-            quartierLongueurPisteCSV.append(longueur_piste_velo)
+        longueur_piste_velo = ligne.split(";")
+        quartierLongueurPisteCSV.append(longueur_piste_velo)
 
-        cpt = cpt+1
 
 with open("s204_comptageVelo.csv", newline="", encoding="utf-8") as fichier:
-    cpt = 0
+    next(fichier)  # Ignore la première ligne du fichier (permet d'éviter l'entête)
     for ligne in fichier:
-        print(ligne)
-        if cpt != 0:
-            comptage_velo = ligne.split(";")
-            comptageVeloCSV.append(comptage_velo)
-
-        cpt = cpt+1
+        comptage_velo = ligne.split(";")
+        comptageVeloCSV.append(comptage_velo)
 
 with open("s204_temperature.csv", newline="", encoding="utf-8") as fichier:
-    cpt = 0
+    next(fichier)  # Ignore la première ligne du fichier (permet d'éviter l'entête)
     for ligne in fichier:
-        print(ligne)
-        if cpt != 0:
-            temperature = ligne.split(";")
-            dateTempCSV.append(temperature)
-
-        cpt = cpt+1
+        temperature = ligne.split(";")
+        dateTempCSV.append(temperature)
 
 
-sql_statements.append("-- Insertion dans la table Date")
+
+sqlFileGenerationContent.append("-- Insertion dans la table Date")
 
 for i in range(0, len(comptageVeloCSV)):
-    leTrucAAdd = ["", None, 0, ""]
-    leTrucAAdd[0] = convert_date(comptageVeloCSV[i][1])
-    leTrucAAdd[1] = None
-    leTrucAAdd[2] = int(comptageVeloCSV[i][4])
-    leTrucAAdd[3] = comptageVeloCSV[i][5].strip()
-
-    temptrouvee = False
+    temperaturetrouvee = False
     j = 0
 
-    while j<len(dateTempCSV) and not temptrouvee:
-        if dateTempCSV[j][0] == leTrucAAdd[0]:
-            leTrucAAdd[1] = float(dateTempCSV[j][1].replace(",", ".").strip())
-            temptrouvee = True
-        j = j+1
+    tableDate = ["", -1, -1, ""] # Date (date DATE (1), jour INT (NN), temperatureMoyenne FLOAT (NN), vacances VARCHAR (NN))
 
-    sql_statements.append(
-        f"INSERT INTO Date (date, jour, temperatureMoyenne, vacances) VALUES ('{leTrucAAdd[0]}', {leTrucAAdd[2]}, {leTrucAAdd[1]}, \"{leTrucAAdd[3]}\");"
-    )
-    print(sql_statements[-1])
+    tableDate[0] = convert_date(comptageVeloCSV[i][1]) # date DATE (1) 
+    tableDate[1] = int(comptageVeloCSV[i][4])          # jour INT (NN)
 
-sql_statements.append("-- Insertion dans la table Quartiers")
-
-for i in range(0, len(quartierCSV)):
-    leTrucAAdd = [0, "", 0]
-    leTrucAAdd[0] = int(quartierCSV[i][0])
-    leTrucAAdd[1] = quartierCSV[i][1].strip()
-
-    j = 0
-    longTrouvee = False
-
-    while j<len(quartierLongueurPisteCSV) and not longTrouvee:
-        if quartierLongueurPisteCSV[j][0] == quartierCSV[j][0]:
-            leTrucAAdd[2] = float(quartierLongueurPisteCSV[j][1].replace(",", ".").strip())
-            longTrouvee = True
-        j = j+1
-
-    if longTrouvee:
-        sql_statements.append(
-            f"INSERT INTO Quartiers (idQuartier, nomQuartier, amenagementCyclable) VALUES ({leTrucAAdd[0]}, '{leTrucAAdd[1]}', {leTrucAAdd[2]});"
-        )
-        print(sql_statements[-1])
-    else:
-        print("longueur de piste non trouvé pour le quartier " + leTrucAAdd[1])
-
-sql_statements.append("-- Insertion dans la table Compteurs")
-
-for i in range(0, len(compteurCSV)):
-    leTrucAAdd = [0, None, ""]
-    leTrucAAdd[0] = int(compteurCSV[i][0])
-    leTrucAAdd[1] = None
-    leTrucAAdd[2] = compteurCSV[i][1].strip()
-
-    quartierTrouvee = False
-    j = 0
-    while j<len(quartierCompteurCSV) and not quartierTrouvee:
-        if quartierCompteurCSV[j][0] == compteurCSV[i][0] and quartierCompteurCSV[j][1].strip() != "":
-            leTrucAAdd[1] = int(quartierCompteurCSV[j][1].strip())
-            quartierTrouvee = True
+    # Trouve et verifie si une temperature existe bien pour une certaine date, si rien a été trouvé on n'insert pas la requete
+    while j < len(dateTempCSV) and not temperaturetrouvee:
+        if dateTempCSV[j][0] == tableDate[0]:
+            tableDate[2] = float(dateTempCSV[j][1].replace(",", ".").strip()) # temperatureMoyenne FLOAT (NN)
+            temperaturetrouvee = True
         j = j + 1
 
-    sql_statements.append(
-        f"INSERT INTO Compteurs (idCompteur, unQuartier, localisation) VALUES ({leTrucAAdd[0]}, {leTrucAAdd[1]}, '{leTrucAAdd[2]}');"
-    )
-    print(sql_statements[-1])
+    tableDate[3] = comptageVeloCSV[i][5].strip()       # vacances VARCHAR (NN)
 
-sql_statements.append("-- Insertion dans la table Comptage_Velo")
+    # Une temperature a ete trouvé on peut donc inserer les donnees de tableData
+    if temperaturetrouvee:
+        sqlFileGenerationContent.append((
+            f'INSERT INTO Date (date, jour, temperatureMoyenne, vacances) VALUES ("{tableDate[0]}", {tableDate[1]}, {tableDate[2]}, "{tableDate[3]}");'
+        ))
+
+
+
+sqlFileGenerationContent.append("-- Insertion dans la table Quartiers")
+
+for i in range(0, len(quartierCSV)):
+    j = 0
+    longueurTrouvee = False
+
+    tableQuartiers = [-1, "", -1] # Quartiers (idQuartier INT (1), nomQuartier VARCHAR (NN), amenagementCyclable FLOAT (NN))
+
+    tableQuartiers[0] = int(quartierCSV[i][0])    # idQuartier INT (1)
+    tableQuartiers[1] = quartierCSV[i][1].strip() # nomQuartier VARCHAR (NN)
+
+    # Trouve et vérifie si le quartier possède bien une donnée pour la longueur piste cyclable, si rien on n'insere pas la requete
+    while j<len(quartierLongueurPisteCSV) and not longueurTrouvee:
+        if quartierLongueurPisteCSV[j][0] == quartierCSV[i][0]:
+            tableQuartiers[2] = float(quartierLongueurPisteCSV[j][1].replace(",", ".").strip()) # amenagementCyclable FLOAT (NN)
+            longueurTrouvee = True
+        j = j + 1
+
+    # Si une longueur de piste a été trouvée on peut insérer la donnée
+    if longueurTrouvee:
+        sqlFileGenerationContent.append(
+            f"INSERT INTO Quartiers (idQuartier, nomQuartier, amenagementCyclable) VALUES ({tableQuartiers[0]}, '{tableQuartiers[1]}', {tableQuartiers[2]});"
+        )
+
+
+
+sqlFileGenerationContent.append("-- Insertion dans la table Compteurs")
+
+for i in range(0, len(compteurCSV)):
+    quartierTrouve = False
+    j = 0
+
+    tableCompteurs = [-1, -1, ""] # Compteurs (idCompteur INT (1), unQuartier=@Quartiers.identifiant INT, localisation VARCHAR (NN))
+
+    tableCompteurs[0] = int(compteurCSV[i][0]) # idCompteur INT (1)
+    
+    # On ajoute et vérifie que le compteur possède bien un quartier, si il ne possède pas de quartier rien ne sera insere
+    while j<len(quartierCompteurCSV) and not quartierTrouve:
+        if quartierCompteurCSV[j][0] == compteurCSV[i][0] and quartierCompteurCSV[j][1].strip() != "":
+            tableCompteurs[1] = int(quartierCompteurCSV[j][1].strip()) # unQuartier=@Quartiers.identifiant INT
+            quartierTrouve = True
+        j = j + 1
+
+    tableCompteurs[2] = compteurCSV[i][1].strip() # localisation VARCHAR (NN)
+
+    # Si un quartier pour le compteur a été trouvé alors on ajoute la donnee.
+    if quartierTrouve:
+        sqlFileGenerationContent.append(
+            f'INSERT INTO Compteurs (idCompteur, unQuartier, localisation) VALUES ({tableCompteurs[0]}, {tableCompteurs[1]}, "{tableCompteurs[2]}");'
+        )
+
+
+sqlFileGenerationContent.append("-- Insertion dans la table Comptage_Velo")
 
 for i in range (0, len(comptageVeloCSV)):
     leTrucAAdd = [0, "", 0, ""]
@@ -177,22 +174,22 @@ for i in range (0, len(comptageVeloCSV)):
     if(OKDate and OKCompteur):
         if comptageVeloCSV[i][3] == "":
             #Quand 3ème colonne = NULL on ne met pas de ""
-            sql_statements.append(
+            sqlFileGenerationContent.append(
                 f"INSERT INTO Comptage_Velo (unCompteur, uneDate, nombresVelos, probabilitePresenceAnomalie) VALUES ({leTrucAAdd[0]}, '{leTrucAAdd[1]}', {leTrucAAdd[2]}, {leTrucAAdd[3]});"
             )
         else:
             #Quand 3ème colonne != NULL on met ""
-            sql_statements.append(
+            sqlFileGenerationContent.append(
                 f"INSERT INTO Comptage_Velo (unCompteur, uneDate, nombresVelos, probabilitePresenceAnomalie) VALUES ({leTrucAAdd[0]}, '{leTrucAAdd[1]}', {leTrucAAdd[2]}, '{leTrucAAdd[3]}');"
             )
-        print(sql_statements[-1])
+        print(sqlFileGenerationContent[-1])
     else:
         print("Erreur avec les donnée, Date ou compteur manquant pour le comptage " + str(leTrucAAdd[0]) + " " + str(leTrucAAdd[1]))
 
-sql_statements = list(dict.fromkeys(sql_statements))
+sqlFileGenerationContent = list(dict.fromkeys(sqlFileGenerationContent))
 
 # Sauvegarde dans un fichier SQL
 with open("insert_data.sql", "w", encoding="utf-8") as f:
-    f.writelines("\n".join(sql_statements) + "\n")
+    f.writelines("\n".join(sqlFileGenerationContent) + "\n")
 
 print("Script SQL généré avec succès dans insert_data.sql")

@@ -9,7 +9,7 @@ Compteurs (idCompteur INT (1), unQuartier=@Quartiers.identifiant INT, localisati
 
 Quartiers (idQuartier INT (1), nomQuartier VARCHAR (NN), amenagementCyclable FLOAT (NN))
 
-Date (date DATE (1), jour INT, temperatureMoyenne FLOAT (NN), vacances VARCHAR (NN))
+Date (date DATE (1), jour INT (NN), temperatureMoyenne FLOAT (NN), vacances VARCHAR (NN))
 ```
 
 ## Contraintes TXT :
