@@ -14,6 +14,7 @@ un fichier sql intitulé **S2.04_Insertion_données.sql** a été généré. Il 
 - Le script se charge automatiquement de retirer tous les problèmes possible des fichiers excel comme des références impossibles ou encore des clefs primaires en double (même date et même quantité de vélo).
 
 ## Modèle UML
+![UML](https://github.com/Thibault0712/SAE-2.04/raw/main/UML/S2.04_SchémaUML.png)
 
 ### Schéma relationnel 
 ```plaintext
@@ -27,6 +28,6 @@ Date (date DATE (1), jour INT (NN), temperatureMoyenne FLOAT (NN), vacances VARC
 ```
 
 ### Contraintes TXT :
-- Le jour_de_la_semaine est entre 1 et 7 INCLUS
-- amenagement_cyclable > 0
-- La probabilité d'une anomalie est soit Fort | Moyen | Faible ou Rien
+- jour est entre 1 et 7 INCLUS
+- amenagementCyclable > 0
+- probabilitePresenceAnomalie est soit Fort | Moyen | Faible ou Rien
