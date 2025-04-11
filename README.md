@@ -4,14 +4,14 @@
 Afin d'insérer les données csv vers la base de donnée nous avons fait le choix de développer un script qui se charge de convertir et de vérifier tous les fichiers CSV vers un fichier d'insertion de données SQL. Une fois le fichier SQL généré il faut l'exécuter pour insérer les données.  
 
 ### Lancement du script
-```python 
-python .\S2.04_Script_convertion_CSV_vers_SQL.py
-```
-un fichier sql intitulé **S2.04_Insertion_données** a été généré. Il ne reste plus qu'à l'exécuter. 
+    ```python 
+    python .\S2.04_Script_convertion_CSV_vers_SQL.py
+    ```
+    un fichier sql intitulé **S2.04_Insertion_données.sql** a été généré. Il ne reste plus qu'à l'exécuter. 
 
 ### Elements importants sur le script
-Afin d'avoir un script assez rapide, nous avons utilisé les **set()** de python pour savoir si une donnée existe bien ou non dans les fichiers CSV cela est plus rapide qu'utiliser des tableaux. 
-Le script se charge automatiquement de retirer tous les problèmes possible des fichiers excel comme des références impossibles ou encore des clefs primaires en double (même date et même quantité de vélo).
+    - Afin d'avoir un script assez rapide, nous avons utilisé les **set()** de python pour savoir si une donnée existe bien ou non dans les fichiers CSV cela est plus rapide qu'utiliser des tableaux. 
+    - Le script se charge automatiquement de retirer tous les problèmes possible des fichiers excel comme des références impossibles ou encore des clefs primaires en double (même date et même quantité de vélo).
 
 ## Modèle UML
 
