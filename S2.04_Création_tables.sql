@@ -1,3 +1,16 @@
+/*
+ SCHEMA RELATIONNEL
+ Comptage_Velo(unCompteur=@Compeurs.idCompteur INT (1), uneDate=@Date.date DATE (1), nombreVelos INT (NN), probalitePresenceAnomalie VARCHAR)
+ Compteurs (idCompteur INT (1), unQuartier=@Quartiers.identifiant INT, localisation VARCHAR (NN))
+ Quartiers (idQuartier INT (1), nomQuartier VARCHAR (NN), amenagementCyclable FLOAT (NN))
+ Date (date DATE (1), jour INT (NN), temperatureMoyenne FLOAT (NN), vacances VARCHAR (NN))
+
+ CONTRAINTES TEXTUELLES
+ jour est entre 1 et 7 INCLUS
+ amenagementCyclable > 0
+ probabilitePresenceAnomalie est soit Fort | Moyen | Faible ou Rien
+ */
+
 DROP TABLE IF EXISTS Comptage_Velo;
 DROP TABLE IF EXISTS Compteurs;
 DROP TABLE IF EXISTS Quartiers;

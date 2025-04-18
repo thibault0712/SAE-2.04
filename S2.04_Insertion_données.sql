@@ -1,3 +1,7 @@
+/**
+Généré à l'aide du script python S2.04_Script_convertion_CSV_vers_SQL.py
+*/
+
 DELETE FROM Comptage_Velo;
 DELETE FROM Compteurs;
 DELETE FROM Quartiers;
